@@ -1,4 +1,6 @@
 var net = require('net');
+var http = require('http');
+var fs = require('fs');
 
 // parse "80" and "localhost:80" or even "42mEANINg-life.com:80"
 var addrRegex = /^(([a-zA-Z\-\.0-9]+):)?(\d+)$/;
@@ -21,3 +23,12 @@ net.createServer(function(from) {
     from.pipe(to);
     to.pipe(from);
 }).listen(addr.from[3], addr.from[2]);
+
+
+http.createServer(function (req, res) {
+  fs.readFile('index.html', function(err, data) {
+    res.writeHead(200, {'Content-Type': 'text/html'});
+    res.write(data);
+    return res.end();
+  });
+}).listen(8080);
