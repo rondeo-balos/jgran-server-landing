@@ -2,33 +2,24 @@ var net = require('net');
 var http = require('http');
 var fs = require('fs');
 
-// parse "80" and "localhost:80" or even "42mEANINg-life.com:80"
-var addrRegex = /^(([a-zA-Z\-\.0-9]+):)?(\d+)$/;
-
-var addr = {
-    from: "7030", //addrRegex.exec(process.argv[2]),
-    to: "2.57.90.16:7030"//addrRegex.exec(process.argv[3])
-};
-
-if (!addr.from || !addr.to) {
-    console.log('Usage: <from> <to>');
-    return;
-}
-
 net.createServer(function(from) {
-    var to = net.createConnection({
-        host: addr.to[2],
-        port: addr.to[3]
-    });
+    var to = net.createConnection(7030,"2.57.90.16");
     from.pipe(to);
     to.pipe(from);
-}).listen(addr.from[3], addr.from[2]);
+    to.on("end", from.end.bind(from));
+    from.on("end", to.end.bind(to));
+}).listen(7030);
 
 
 http.createServer(function (req, res) {
-  fs.readFile('index.html', function(err, data) {
-    res.writeHead(200, {'Content-Type': 'text/html'});
-    res.write(data);
-    return res.end();
+  res.writeHead(200, {'Content-Type': 'text/html'});
+  fs.readFile('index.html', null, function(err, data) {
+    if (err) {
+        res.writeHead(404);
+        res.write('Whoops! File not found!');
+    } else {
+        res.write(data);
+    }
+    res.end();
   });
-}).listen(8080);
+}).listen(80);

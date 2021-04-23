@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/rondeo-balos/jgran-server-landing/issues"
   },
-  "homepage": "https://github.com/rondeo-balos/jgran-server-landing#readme"
+  "homepage": "https://github.com/rondeo-balos/jgran-server-landing#readme",
+  "dependencies": {
+    "net": "^1.0.2",
+    "nodemon": "^2.0.7"
+  }
 }
