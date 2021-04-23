@@ -6,8 +6,8 @@ var fs = require('fs');
 var addrRegex = /^(([a-zA-Z\-\.0-9]+):)?(\d+)$/;
 
 var addr = {
-    from: addrRegex.exec(process.argv[2]),
-    to: addrRegex.exec(process.argv[3])
+    from: "7030", //addrRegex.exec(process.argv[2]),
+    to: "2.57.90.16:7030"//addrRegex.exec(process.argv[3])
 };
 
 if (!addr.from || !addr.to) {
