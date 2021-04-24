@@ -13,7 +13,7 @@ var fs = require('fs');
 var httpProxy = require('http-proxy');
 var targetHost = '2.57.90.16';
 var port = 7030;
-httpProxy.createProxyServer({target: targetHost + ':' + port}).listen(port);
+var proxy = httpProxy.createProxyServer({});//.listen(port);
 
 http.createServer(function (req, res) {
   res.writeHead(200, {'Content-Type': 'text/html'});
@@ -27,3 +27,7 @@ http.createServer(function (req, res) {
     res.end();
   });
 }).listen(80);
+
+http.createServer(function (req, res) {
+  proxy.web(req, res, { target:  targetHost + ':' + port});
+}).listen(7030);
